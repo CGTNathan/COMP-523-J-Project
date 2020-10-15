@@ -130,29 +130,3 @@ export async function vote(sheetId, judgeName, event, first, second, third) {
     await sheet.saveUpdatedCells();
 
 }
-
-export async function dostuff() {
-    var doc = new GoogleSpreadsheet('194iz66ka28ejiDV6_iHtGyV7V6gK8QSl9eFb8cMC1IM');
-    // OR load directly from json file if not in secure environment
-    await doc.useServiceAccountAuth(require('./creds.json'));
-
-    await doc.loadInfo(); // loads document properties and worksheets
-    console.log(doc.title);
-
-    var sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
-    console.log(sheet.title);
-    console.log(sheet.rowCount);
-
-    await sheet.loadCells('C2:Z2');
-    for (var i = 2; i < 24; i++) {
-        var participant = sheet.getCell(1,i).value;
-        if (participant !== null) {
-            console.log(participant);
-        }
-    }
-
-    var rows = await sheet.getRows();
-    console.log(rows[3].Judges); // 'Larry Page'
-    rows[3].Round = 'test'; // update a value
-    await rows[3].save(); // save updates
-}
