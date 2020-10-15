@@ -8,7 +8,11 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 async function initSheet(sheetId) {  
     var doc = new GoogleSpreadsheet(sheetId);
-    await doc.useServiceAccountAuth(require('./creds.json'));
+    //await doc.useServiceAccountAuth(require('./creds.json'));
+    await doc.useServiceAccountAuth({
+        client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY,
+      });
     await doc.loadInfo();
     return doc;
 }
